@@ -1,0 +1,47 @@
+\section{Learning from Preferences}
+
+In the previous part you trained multiple policies from scratch and compared them at the end of training. In this section, we will see how we can use human preferences on two roll-outs to learn a reward function.
+
+We will follow the framework proposed by \cite{NIPS2017_d5e2c0ad}. A reward function $r: \mathcal{O} \times \mathcal{A} \rightarrow \mathbb{R}$ defines a preference relation $\succ$ if for all trajectories $\sigma^i = (o^i_t,a^i_t)_{t=0,...,T}$ we have that
+
+$$
+\left(\left(o_0^1, a_0^1\right), \ldots,\left(o_{T}^1, a_{T}^1\right)\right) \succ\left(\left(o_0^2, a_0^2\right), \ldots,\left(o_{T}^2, a_{T}^2\right)\right)
+$$
+
+whenever
+
+$$
+r\left(o_0^1, a_0^1\right)+\cdots+r\left(o_{T}^1, a_{T}^1\right)>r\left(o_0^2, a_0^2\right)+\cdots+r\left(o_{T}^2, a_{T}^2\right) .
+$$
+
+Following the Bradley-Terry preference model \cite{19ff28b9-64f9-3656-ba40-08326a05748e}, we can calculate the probability of one trajectory $\sigma^1$ being preferred over $\sigma^2$ as follows:
+
+$$
+\hat{P}\left[\sigma^1 \succ \sigma^2\right]=\frac{\exp \sum \hat{r}\left(o_t^1, a_t^1\right)}{\exp \sum \hat{r}\left(o_t^1, a_t^1\right)+\exp \sum \hat{r}\left(o_t^2, a_t^2\right)},
+$$
+
+where $\hat{r}$ is an estimate of the reward for a state-action pair. This is similar to a classification problem, and we can fit a function approximator to $\hat{r}$ by minimizing the cross-entropy loss between the values predicted with the above formula and ground truth human preference labels $\mu(1)$ and $\mu(2)$:
+
+$$
+\operatorname{loss}(\hat{r})=-\sum_{\left(\sigma^1, \sigma^2, \mu\right) \in \mathcal{D}} \mu(1) \log \hat{P}\left[\sigma^1 \succ \sigma^2\right]+\mu(2) \log \hat{P}\left[\sigma^2 \succ \sigma^1\right] .
+$$
+%
+Once we have learned the reward function\footnote{Recent work on RLHF for reinforcement learning suggests that the pairwise feedback provided by humans on partial trajectories may be more consistent with regret, and that the learned reward function may be better viewed as an advantage function. See Knox et al. AAAI 2024 "Learning optimal advantage from preferences and mistaking it for reward." \url{https://openreview.net/forum?id=euZXhbTmQ7}}, we can apply any policy optimization algorithm (such as PPO) to maximize the returns of a model under it.
+
+\begin{enumerate}[(a)]
+
+	\input{02-learning-from-preferences/01-written}
+
+	\input{02-learning-from-preferences/02-two-trajectories}
+
+	\input{02-learning-from-preferences/03-four-samples}
+
+	\input{02-learning-from-preferences/04-rlhf}
+
+	\input{02-learning-from-preferences/05-train-plot-reward}
+
+	\input{02-learning-from-preferences/06-identifiable}
+
+	\input{02-learning-from-preferences/07-render-policy}
+
+\end{enumerate}

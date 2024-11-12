@@ -1,0 +1,46 @@
+\def\assignmentnum{4 }
+\def\assignmenttitle{XCS234 Assignment \assignmentnum}
+
+
+\input{macros}
+\input{py-macros}
+
+\usepackage{biblatex} % bibliography
+\addbibresource{main.bib}
+
+\begin{document}
+
+\pagestyle{myheadings} \markboth{}{\assignmenttitle}
+
+{\huge\noindent \assignmenttitle}
+
+\ruleskip
+
+{\bf Due {\due }.}
+
+\medskip
+
+\input{00-instructions/00-main}
+
+\ruleskip
+
+\clearpage
+
+\input{00-intro}
+\clearpage
+
+\input{01-reward-engineering/00-main}
+\clearpage
+
+\input{02-learning-from-preferences/00-main}
+\clearpage
+
+\input{03-dpo/00-main}
+\clearpage
+
+\input{04-rlhf-challenges/00-main}
+\clearpage
+
+\input{00-outro}
+
+\end{document}

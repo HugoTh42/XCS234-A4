@@ -1,0 +1,22 @@
+\item \points{3d}
+
+Run DPO for 3 different random seeds (you may want to tweak the number of DPO steps to get better results). The plots of the evolution of returns over time are illustrated below.
+
+
+\begin{lstlisting}
+$ python plot.py --dpo-directory results_dpo --output results_dpo/hopper_dpo.png
+\end{lstlisting}
+
+How does it compare to the returns achieved using RLHF? Comment on the pros and cons of each method applied to this specific example.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.3\linewidth]{images/dpo_results}
+    \caption{DPO results}
+    \label{fig:dpo}
+\end{figure}
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_3d(.*?)% <SCPD_SUBMISSION_TAG>_3d', f.read(), re.DOTALL)).group(1))
+🐍

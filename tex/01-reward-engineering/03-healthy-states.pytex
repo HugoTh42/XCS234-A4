@@ -1,0 +1,8 @@
+\item \points{1c}
+
+By default, the episode terminates when the agent leaves the set of ``healthy'' states. What do these ``healthy'' states mean? Name one advantage and one disadvantage of this early termination.
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_1c(.*?)% <SCPD_SUBMISSION_TAG>_1c', f.read(), re.DOTALL)).group(1))
+🐍

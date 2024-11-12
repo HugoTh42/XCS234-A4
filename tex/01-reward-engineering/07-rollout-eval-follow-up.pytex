@@ -1,0 +1,8 @@
+\item \points{1g}
+
+Render another video for another policy. How do the two rollouts compare? Do you prefer one over the other?
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_1g(.*?)% <SCPD_SUBMISSION_TAG>_1g', f.read(), re.DOTALL)).group(1))
+🐍

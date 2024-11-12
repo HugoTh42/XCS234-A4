@@ -1,0 +1,341 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}    
+\usepackage{url}            
+\usepackage{booktabs}       
+\usepackage{amsfonts}  
+\usepackage{amsmath}
+\usepackage{nicefrac}       
+\usepackage{microtype}      
+\usepackage{fullpage}
+% \setcounter{secnumdepth}{0}
+
+\usepackage[numbers]{natbib}
+%\usepackage[textsize=tiny]{todonotes}
+\setlength{\marginparwidth}{11ex}
+
+\newcommand{\E}{\mathbb E}
+\usepackage{wrapfig}
+\usepackage{caption}
+
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+\usepackage{url}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{upgreek}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[mathscr]{euscript}
+\usepackage{mathtools}
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{cor}{Corollary}
+\newtheorem{assumption}{Assumption}
+\newtheorem{lem}{Lemma}
+\usepackage{xcolor}
+\usepackage{nicefrac}
+\usepackage{xr}
+%\usepackage{chngcntr}
+\usepackage{apptools}
+\usepackage[page, header]{appendix}
+\AtAppendix{\counterwithin{lem}{section}}
+\usepackage{titletoc}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=1cm}
+\setlist[enumerate]{leftmargin=1cm}
+
+
+
+
+\definecolor{DarkRed}{rgb}{0.75,0,0}
+\definecolor{DarkGreen}{rgb}{0,0.5,0}
+\definecolor{DarkPurple}{rgb}{0.5,0,0.5}
+\definecolor{Dark}{rgb}{0.5,0.5,0}
+\definecolor{DarkBlue}{rgb}{0,0,0.7}
+\usepackage[bookmarks, colorlinks=true, plainpages = false, citecolor = DarkBlue, urlcolor = blue, filecolor = black, linkcolor =DarkGreen]{hyperref}
+\usepackage{breakurl}
+\usepackage{tcolorbox}
+\usepackage[ruled, vlined, linesnumbered]{algorithm2e}
+\newcommand\mycommfont[1]{\footnotesize\ttfamily\textcolor{blue}{#1}}
+\SetCommentSty{mycommfont}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\allowdisplaybreaks[2]
+\newcommand{\prob}{\mathbb P}
+\newcommand{\Var}{\mathbb V}
+\newcommand{\Ex}{\mathbb E}
+\newcommand{\varV}{\mathscr V}
+\newcommand{\indicator}[1]{\mathbb I\{ #1 \} }
+\newcommand{\statespace}{\mathcal S}
+\newcommand{\actionspace}{\mathcal A}
+\newcommand{\saspace}{\statespace \times \actionspace}
+\newcommand{\satspace}{\mathcal Z}
+\newcommand{\numsa}{\left|\saspace\right|}
+\newcommand{\numsat}{\left|\satspace\right|}
+\newcommand{\numS}{S}
+\newcommand{\numA}{A}
+\newcommand{\wmin}{w_{\min}}
+\newcommand{\wminc}{w'_{\min}}
+\newcommand{\range}{\operatorname{rng}}
+\newcommand{\polylog}{\operatorname{polylog}}
+\newcommand{\dspace}{\mathcal D}
+\newcommand{\numD}{|\dspace|}
+\newcommand{\numSucc}[1]{|\statespace(#1)|}
+\newcommand{\succS}[1]{\statespace(#1)}
+\newcommand{\given}{\,|\,}
+\newcommand{\biggiven}{\,\bigg{|}\,}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Esub}[1]{\underset{#1}{\Ex}}
+\renewcommand{\H}{\mathcal{H}}
+\newcommand{\cA}{\mathcal{A}}
+\renewcommand{\d}[1]{\,\mathrm{d}#1}
+\newcommand{\piTS}{\pi^{\textsc{ts}}}
+
+\newcommand{\solution}[1]{{\color{red} #1}}
+%\newcommand{\solution}[1]{}
+
+\newcommand{\reals}{\mathbb R}
+\newcommand{\const}{\textrm{const.}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\llnp}{\operatorname{llnp}}
+\newcommand{\defeq}{:=}
+\usepackage{xspace}
+\usepackage{natbib}
+\setcitestyle{authoryear,open={(},close={)}}
+\newcommand{\algname}{UBEV\xspace}
+
+\mathtoolsset{showonlyrefs=true}
+
+\let\temp\epsilon
+\let\epsilon\varepsilon
+\newcommand{\cK}{\mathcal K}
+\newcommand{\cI}{\mathcal I}
+\newcommand{\Pro}{\mathbb P}
+
+\title{CS 234 Winter 2021 \\ HW 4\\
+Due: March 17 at 6:00 pm (PST)}
+\date{}
+
+\begin{document}
+	\maketitle
+\noindent For submission instructions please refer to \href{http://web.stanford.edu/class/cs234/assignments.html}{website}
+For all problems, if you use an existing result from either the literature or a textbook to solve the exercise, you need to cite the source.
+
+\section{Estimation of the Warfarin Dose [60 pts]}
+
+\subsection{Introduction}\label{sec:intro}
+\textbf{Warfarin}
+is the most widely used oral blood anticoagulant agent worldwide; 
+with more than 30 million prescriptions for this drug in the United States in 2004. 
+The appropriate dose of warfarin is difficult to establish because it can vary substantially among patients,
+and the consequences of taking an incorrect dose can be severe.  If a patient receives a dosage that is too high, they may experience excessive anti-coagulation (which can lead to dangerous bleeding), and if a patient receives a dosage which is too low, they may experience inadequate anti-coagulation (which can mean that it is not helping to prevent blood clots). Because incorrect doses contribute to a high rate of adverse effects, there is interest in developing improved strategies for determining the appropriate dose \citep{international2009estimation}. 
+
+\noindent Commonly used approaches to prescribe the initial warfarin dosage are the \textit{pharmacogenetic algorithm} developed by the IWPC (International Warfarin Pharmacogenetics Consortium), the \textit{clinical algorithm} and a \textit{fixed-dose} approach.
+
+\noindent In practice a patient is typically prescribed an initial dose, the doctor then monitors how the patient responds to the dosage, and then adjusts the patient's dosage. This interaction can proceed for several rounds before the best dosage is identified. However, it is best if the correct dosage can be initially prescribed.
+
+\noindent This question is motivated by the challenge of Warfarin dosing, and considers a simplification of this 
+important problem, using real data.  The goal of this question is to explore the performance of multi-armed bandit algorithms to best predict the correct dosage of Warfarin for a patient \emph{without} a trial-an-error procedure as typically employed. %The algorithm will learn how to correct its prediction based on the observed response.
+
+\paragraph{Problem setting} 
+
+Let $T$ be the number of time steps. At each time step $t$, a new patient arrives and we 
+observe its individual feature vector $X_t \in \mathbb{R}^d$: this represents the available knowledge about the patient (e.g., gender, age, \dots).  The decision-maker (your algorithm) has access to $K$ arms, where the arm represents the warfarin dosage to provide to the patient. 
+For simplicity, we discretize the actions into $K=3$
+\begin{itemize}
+    \item Low warfarin dose: under 21mg/week
+    \item Medium warfarin dose: 21-49 mg/week
+    \item High warfarin dose: above 49mg/week
+\end{itemize}
+If the algorithm identifies the correct dosage for the patient, the reward is 0, otherwise a reward of $-1$ is received.
+
+
+\noindent Lattimore and Szepesvári have a nice series of blog posts that provide a good introduction to bandit algorithms, available here:  \href{/http://banditalgs.com}{BanditAlgs.com}. The \href{http://banditalgs.com/2016/09/04/bandits-a-new-beginning/}{Introduction} and the \href{http://banditalgs.com/2016/10/19/stochastic-linear-bandits/}{Linear Bandit} posts may be particularly of interest. For more details of the available Bandit literature you can check out the \href{https://tor-lattimore.com/downloads/book/book.pdf}{Bandit Algorithms Book} by the same authors.
+
+
+\subsection{Dataset}\label{sec:data}
+
+We use a publicly available patient dataset that was collected by staff at the Pharmacogenetics and Pharmacogenomics Knowledge Base (PharmGKB) for 5700 patients who were treated with warfarin from 21 research groups spanning 9 countries and 4 continents. You can find the data in \texttt{warfarin.csv} and metadata containing a description of each column in \texttt{metadata.xls}. Features of each patient in this dataset includes, demographics (gender, race, \dots), background (height, weight, medical history, \dots), phenotypes and genotypes. 
+
+\noindent Importantly, this data contains the true patient-specific optimal warfarin doses (which are initially unknown but are eventually found through the physician-guided dose adjustment process over the course of a few weeks) for 5528 patients. You may find this data in mg/week in \texttt{Therapeutic Dose of Warfarin}\footnote{You cannot use \texttt{Therapeutic Dose of Warfarin} data as an input to your algorithm. } column in \texttt{warfarin.csv}. There are in total 5528 patient with known therapeutic dose of warfarin in the dataset (you may drop and ignore the remaining 173 patients for the purpose of this question). Given this data you can classify the right dosage for each patient as \textit{low}: less than 21 mg/week, \textit{medium}: 21-49 mg/week and \textit{high}: more than 49 mg/week, as defined in \cite{international2009estimation} and \nameref{sec:intro}.
+\ \\
+\noindent \textbf{The data processing is already implemented for you} 
+
+
+\subsection{Implementing Baselines [10 pts] }\label{sec:warmup}
+\noindent Please implement the following two baselines in main.py 
+\begin{enumerate}
+    \item \textit{Fixed-dose}: This approach will assign 35mg/week (medium) dose to all patients.
+    \item \textit{Warfarin Clinical Dosing Algorithm}: This method is a linear model based on age, height, weight, race and medications that patient is taking. You can find the exact model is section S1f of \texttt{appx.pdf}.
+\end{enumerate}
+Run the fixed dosing algorithm and clinical dosing algorithm with the following command:
+\begin{verbatim}
+        python main.py --run-fixed --run-clinical
+\end{verbatim}
+You should see the total\_fraction\_correct to be fixed at about 0.61 for fixed dose and 0.64 for clinical dose algorithm. You can run them individually as well. Just use one of the command line arguments instead.
+
+
+\subsection{Implementing a Linear Upper Confidence Bandit Algorithm [15 pts]}
+Please implement the Disjoint Linear Upper Confidence Bound (LinUCB) algorithm from \cite{li2010contextual} in main.py. See Algorithm 1 from paper. Please feel free to adjust the --alpha argument, but you don't have to.  Run the LinUCB algorithm with the following command:
+\begin{verbatim}
+        python main.py --run-linucb
+\end{verbatim}
+You should see the total\_fraction\_correct to be above 0.64, though the results may vary per run.
+
+\subsection{Implementing a Linear eGreedy Bandit Algorithm [5 pts]}
+Is the upper confidence bound making a difference? Please implement the e-Greedy algorithm in main.py. Please feel free to adjust the --ep argument, but you don't have to. Does eGreedy perform better or worse than Upper Confidence bound? (You do not need to include your answers here)  Run the $\epsilon$-greedy LinUCB with the following command:
+\begin{verbatim}
+        python main.py --run-egreedy
+\end{verbatim}
+You should see the total\_fraction\_correct to be above 0.61, though the results may vary per run.
+
+\subsection{Implementing a Thompson Sampling Algorithm [20 pts]}
+Please implement the Thompson Sampling for Contextual Bandits from  \cite{agrawal2013thompson} in main.py. See Algorithm 1 and section 2.2 from paper. Please feel free to adjust the --v2 argument, but you don't have to.  (This actually v squared from the paper) Run the Thompson Sampling algorithm with the following command:
+\begin{verbatim}
+        python main.py --run-thompson
+\end{verbatim}
+You should see the total\_fraction\_correct to be \textbf{around} 0.64, though the results may vary per run.
+
+\subsection{Results [10 pts]}
+At this point, you should see a plot in your results folder titled "fraction\_incorrect.png". If not, run the following command to generate the plot:
+\begin{verbatim}
+        python main.py
+\end{verbatim}
+Include this plot in for this part. Please also comment on your results in a few sentences. How would you compare the algorithms? Which algorithm "did the best" based on your metric?
+
+\section{A Bayesian regret bound for Thompson sampling [40 pts]}
+Consider the $K$-armed bandit problem: there are $K$ ``arms'' (actions), and we will choose one arm $a_t \in [K]$ to pull at each time $t \in [T]$, then receive a random reward $r_t \sim p(r \given \theta, a = a_t)$. Here $\theta$ is a random variable that parameterizes the reward distribution. Its ``true'' value is unknown to us, but we can make probabilistic inferences about it by combining prior belief with observed reward data. We denote the expected reward for arm $a$ (for a fixed $\theta$) as $\mu_\theta(a) := \E[r \given \theta, a]$. 
+
+A \textit{policy} specifies a distribution over the next arm to pull, given the observed history of interactions $H_t = (a_1, r_1, \dots, a_{t-1}, r_{t-1})$.\footnote{Note: we take history to mean that which is known at the beginning of step $t$, rather than at the end of step $t$, so it only goes up to $a_{t-1}, r_{t-1}$.}
+Formally, a policy is a collection of maps $\pi = \{\pi_t : \H_t \to \Delta(\cA)\}_{t=1}^T$, where $\H_t$ is the space of all possible histories at time $t$ and $\Delta(\cA)$ is the set of probability distributions over $\cA$. We denote the probability of arm $a$ under policy $\pi$ at time $t$ as $\pi_t(a \given H_t)$.
+
+For a fixed value of $\theta$, the suboptimality of a policy $\pi$ can be measured by the \textit{expected regret}:
+$$
+R_{T, \theta}(\pi) = \E_H\left[\sum_{t=1}^T \mu_\theta(a^*) - \mu_\theta(a_t) \biggiven \theta\right]
+$$
+where the expectation is taken with respect to the arms selected, $a_t \sim \pi_t(a \given H_t)$, and rewards subsequently observed, $r_t \sim p(r \given \theta, a=a_t)$. We use $H$ as a shorthand for $H_{T+1} = (a_1, r_1, \dots, a_T, r_T)$.\footnote{The regret does not actually depend on $r_T$.} Note that $a^*$ is random because $\theta$ is random, but for a given $\theta$ it is fixed and can be computed by $a^* = \arg\max_a \mu_{\theta}(a)$. (Assume for simplicity that there is one optimal action for any given $\theta$.)
+
+Our goal in this problem is to prove a bound on the \textit{Bayesian regret}, which is the expected regret averaged over a prior distribution on $\theta$:
+$$
+\text{BR}_T(\pi) = \E_{\theta}[R_{T, \theta}(\pi)]
+$$
+
+We will analyze the \textit{Thompson sampling} (or \textit{posterior sampling}) algorithm, which operates by sampling from the posterior distribution of the optimal action $a^*$ given $H_t$:
+$$
+\piTS_t(a \given H_t) = p(a^*=a \given H_t) %= \int p(a^*=a \given \theta) p(\theta \given H_t) \d{\theta}
+$$
+We can sample from $\piTS_t$ by first sampling $\theta_t \sim p(\theta \given H_t)$ and then computing $a_t = \arg\max_a \mu_{\theta_t}(a)$.
+
+\begin{enumerate}
+\item[(a)]
+[7 pts]
+Let $\{L_t : \cA \to \R\}_{t=1}^T$ and $\{U_t : \cA \to \R\}_{t=1}^T$ be lower and upper confidence bound\footnote{In Thompson sampling, the upper confidence bound is not used to select actions; we only introduce it for the purpose of analysis.} sequences (respectively), where each $L_t$ and $U_t$ depends on $H_t$.
+Show that the Bayesian regret for Thompson sampling can be decomposed as
+\begin{equation}
+\text{BR}_T(\piTS) = \E_{\theta, H}\left[\sum_{t=1}^T [U_t(a_t) - L_t(a_t)] + [L_t(a_t) - \mu_\theta(a_t)] + [\mu_\theta(a^*) - U_t(a^*)]\right]
+\end{equation}
+This equality does not hold in general, so its proof will require using some property of $\piTS$.
+\solution{
+The key points are that, conditioned on $H_t$, (a) the distribution of $a_t$ matches the distribution of $a^*$ and (b) $U_t$ is a deterministic function. Hence we can write $\Ex[U_t(a_t)] = \Ex[\Ex[U_t(a_t) \given H_t]] = \Ex[\Ex[U_t(a^*) \given H_t]] = \Ex[U_t(a^*)]$. The other terms cancel already.
+}
+
+\item[(b)]
+[8 pts]
+Now assume the rewards $r_t$ are bounded in $[0,1]$ and $L_t \le U_t$. Show that
+\begin{equation}
+\text{BR}_T(\piTS) \le \E_{\theta, H}\left[\left(\sum_{t=1}^T [U_t(a_t) - L_t(a_t)]\right) + T \sum_{a} \mathbb{I} \left\{\bigcup_{t=1}^T \left\{ \mu_\theta(a) \not \in [L_t(a), U_t(a)] \right\}\right\} \right]
+\end{equation}
+where the notation $\mathbb{I}\{\cdot\}$ refers to an indicator random variable which equals 1 if the expression inside the brackets is true and equals 0 otherwise.
+
+\solution{
+We only have to bound the terms $[L_t(a_t) - \mu_\theta(a_t)]$ and $[\mu_\theta(a^*) - U_t(a^*)]$. The reasoning is analogous for both terms, so we will only explain the first.
+
+Notice that $[L_t(a_t) - \mu_\theta(a_t)]$ is only positive when $L_t(a_t) > \mu_\theta(a_t)$, in which case $\mu_\theta(a_t) \not \in [L_t(a_t), U_t(a_t)]$, so the indicator term is also positive. However, even if $L_t(a_t) > \mu_\theta(a_t)$ for all $t$, the difference $[L_t(a_t) - \mu_\theta(a_t)]$ is at most $1$ for each $t$ (since everything is bounded in $[0,1]$), so the sum of the errors is at most $T$, which is the value of $T$ times the indicator.
+}
+
+\end{enumerate}
+Let us now impose a specific form of confidence bounds:
+\begin{align}
+L_t(a) &= \max \left\{0, \hat\mu_t(a) - \sqrt{\frac{2 + 6\log T}{n_t(a)}}\right\} \\
+U_t(a) &= \min \left\{1, \hat\mu_t(a) + \sqrt{\frac{2 + 6\log T}{n_t(a)}}\right\}
+\end{align}
+where $\hat\mu_t(a)$ is the mean of rewards received playing action $a$ before time $t$, and $n_t(a)$ is the number of times action $a$ was played before time $t$.
+(If action $a$ has never been played at time $t$, $L_t(a) = 0$ and $U_t(a) = 1$.)
+
+You may take as given the following fact: with $L_t$ and $U_t$ defined as above, it holds that
+$$
+\forall a, \quad \P_{\theta, H}\left(\bigcup_{t=1}^T \left\{ \mu_\theta \not \in [L_t(a), U_t(a)] \right\}\right) \leq \frac{1}{T}
+$$
+and thus, the bound from part (b) implies
+\begin{equation}
+\text{BR}_T(\piTS) \le \E_{\theta, H}\left[\sum_{t=1}^T [U_t(a_t) - L_t(a_t)]\right] + K
+\end{equation}
+To bound the remaining terms, let us use the decomposition $\sum_{t=1}^T [U_t(a_t) - L_t(a_t)] = \sum_a \sum_{t \in \mathcal{T}_a} [U_t(a) - L_t(a)]$, where $\mathcal{T}_a = \{t \in [T] : a_t = a\}$.
+
+\begin{enumerate}
+\item[(c)]
+[5 pts]
+Show that
+$$
+\sum_{t \in \mathcal{T}_a} [U_t(a) - L_t(a)] \le 1 + 2 \sqrt{2 + 6 \log T} \sum_{i=1}^{n_T(a)} \frac{1}{\sqrt{i}}
+$$
+\solution{
+The first time $a$ is selected, the difference is $U_t(a) - L_t(a) = 1 - 0 = 1$. For each subsequent time $a$ is picked (up until $n_T(a)$ times, which is the total number of times $a$ is picked over all $T$ time steps), the difference is at most $2 \sqrt{2 + 6 \log T} \frac{1}{\sqrt{n_t(a)}}$, where $n_t(a)$ is incremented once after each pick. This yields the sum $\sum_{i=1}^{n_T(a)} \frac{1}{\sqrt{i}}$.
+}
+
+\item[(d)]
+[7 pts]
+Show that
+$$
+\sum_{i=1}^{n_T(a)} \frac{1}{\sqrt{i}} \le 2\sqrt{n_T(a)}
+$$
+(Hint: Bound the sum by an integral.)
+\solution{
+$$
+\sum_{i=1}^{n_T(a)} \frac{1}{\sqrt{i}} \le \int_0^{n_T(a)} x^{-\frac{1}{2}} \d{x} = [2x^{\frac{1}{2}}]_0^{n_T(a)} = 2\sqrt{n_T(a)}
+$$
+}
+
+\item[(e)]
+[8 pts]
+Use the previous parts to obtain
+$$
+\text{BR}_T(\piTS) \le 2K + 4 \sqrt{KT(2 + 6 \log T)}
+$$
+(Hint: You may find the \textit{AM-QM inequality} $\frac{1}{n} \sum_{i=1}^n x_i \le \sqrt{\frac{1}{n} \sum_{i=1}^n x_i^2}$ helpful.)
+
+\solution{
+We have
+\begin{align*}
+\text{BR}(T) &\le \E\left[\sum_{t=1}^T [U_t(a_t) - L_t(a_t)]\right] + K \tag{eqn. 5} \\
+&= K + \E\left[\sum_a \sum_{t \in \mathcal{T}_a} [U_t(a_t) - L_t(a_t)]\right] \\
+&\le K + \E\left[\sum_a \left(1 + (2\sqrt{2 + 6\log T})(2\sqrt{n_T(a)})\right)\right] \tag{by parts (c) and (d)} \\
+&= 2K + 4\sqrt{2 + 6 \log T} \, \E\left[\sum_a\sqrt{n_T(a)}\right]
+\end{align*}
+Then using the AM-QM inequality and the fact that $\sum_a n_T(a) = T$, we have
+$$
+\E\left[\sum_a \sqrt{n_T(a)}\right] = K \E\left[\frac{1}{K}\sum_a \sqrt{n_T(a)}\right] \le K \E\sqrt{\frac{1}{K} \sum_a n_T(a)} = \Ex[\sqrt{KT}] = \sqrt{KT}
+$$
+Thus
+$$
+\text{BR}(T) \le 2K + 4\sqrt{KT(2 + 6\log T)}
+$$
+}
+
+\item[(f)]
+[5 pts]
+Suppose the prior over $\theta$ is wildly misspecified, such that the prior probability of the true $\theta$ is extremely small or zero. What goes wrong in the regret analysis we have done above?
+\end{enumerate}
+
+
+\bibliography{bib} 
+\bibliographystyle{abbrvnat}
+
+\end{document} 

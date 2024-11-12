@@ -1,0 +1,8 @@
+\item \points{1b}
+
+Read the description of the \href{https://gymnasium.farama.org/environments/mujoco/hopper/}{Hopper environment}. Using your own words, describe the goal of the environment, and how each term of the reward functions contributes to encourage the agent to achieve it. (\textbf{Optional:} Do you agree with this reward function? Would you change it? How?
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_1b(.*?)% <SCPD_SUBMISSION_TAG>_1b', f.read(), re.DOTALL)).group(1))
+🐍

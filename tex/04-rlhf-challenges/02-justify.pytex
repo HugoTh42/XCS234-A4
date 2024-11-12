@@ -1,0 +1,8 @@
+\item \points{4b}
+
+Would RLHF be a good way to train a system to make better medical diagnoses? Why or why not?
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_4b(.*?)% <SCPD_SUBMISSION_TAG>_4b', f.read(), re.DOTALL)).group(1))
+🐍

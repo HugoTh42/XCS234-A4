@@ -1,0 +1,8 @@
+\item \points{2f}
+
+Is the learned reward function identifiable?
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_2f(.*?)% <SCPD_SUBMISSION_TAG>_2f', f.read(), re.DOTALL)).group(1))
+🐍

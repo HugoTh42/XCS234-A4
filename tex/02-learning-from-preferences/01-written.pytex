@@ -1,0 +1,8 @@
+\item \points{2a}
+
+Let $\hat{r}(o,\ a) = \phi_w(o,\ a)$. Calculate $\nabla_w \operatorname{loss}(\hat{r}(o,\ a))$.
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_2a(.*?)% <SCPD_SUBMISSION_TAG>_2a', f.read(), re.DOTALL)).group(1))
+🐍

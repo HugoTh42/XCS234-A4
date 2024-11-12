@@ -1,0 +1,78 @@
+{
+  "1a" : {"points":1, "question_id":"1a", "is_written":true, "is_coding":false, "is_online":false, "is_extra_credit":false},
+
+  "1b" : {"points":1, "question_id":"1b", "is_written":true, "is_coding":false, "is_online":false, "is_extra_credit":false},
+
+  "1c" : {"points":1, "question_id":"1c", "is_written":true, "is_coding":false, "is_online":false, "is_extra_credit":false},
+
+  "1d" : {"points":0, "question_id":"1d", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "1e" : {"points":1, "question_id":"1e", "is_written":true, "is_coding":false, "is_online":false, "is_extra_credit":false},
+
+  "1f" : {"points":1, "question_id":"1f", "is_written":true, "is_coding":false, "is_online":false, "is_extra_credit":false},
+
+  "1g" : {"points":1, "question_id":"1g", "is_written":true, "is_coding":false, "is_online":false, "is_extra_credit":false},
+
+  "2a" : {"points":4, "question_id":"2a", "is_written":true, "is_coding":false, "is_online":false, "is_extra_credit":false},
+
+  "2b" : {"points":2, "question_id":"2b", "is_written":true, "is_coding":false, "is_online":false, "is_extra_credit":false},
+
+  "2c" : {"points":2, "question_id":"2c", "is_written":true, "is_coding":false, "is_online":false, "is_extra_credit":false},
+
+  "2d-0-basic" : {"points":0.5, "question_id":"2d", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "2d-1-basic" : {"points":0.5, "question_id":"2d", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "2d-2-hidden" : {"points":1, "question_id":"2d", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "2d-3-basic" : {"points":1, "question_id":"2d", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "2d-4-hidden" : {"points":2.5, "question_id":"2d", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "2d-5-hidden" : {"points":2.5, "question_id":"2d", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "2e" : {"points":3, "question_id":"2e", "is_written":true, "is_coding":false, "is_online":false, "is_extra_credit":false},
+
+  "2f" : {"points":2, "question_id":"2f", "is_written":true, "is_coding":false, "is_online":false, "is_extra_credit":false},
+
+  "2g" : {"points":2, "question_id":"2g", "is_written":true, "is_coding":false, "is_online":false, "is_extra_credit":false},
+
+  "3a-0-basic" : {"points":0.5, "question_id":"3a", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "3a-1-basic" : {"points":0.5, "question_id":"3a", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "3a-2-hidden" : {"points":1, "question_id":"3a", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "3a-3-basic" : {"points":1, "question_id":"3a", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "3a-4-basic" : {"points":2, "question_id":"3a", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "3a-5-hidden" : {"points":4, "question_id":"3a", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "3a-6-basic" : {"points":1, "question_id":"3a", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "3a-7-hidden" : {"points":2, "question_id":"3a", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "3a-8-basic" : {"points":2, "question_id":"3a", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "3a-9-hidden" : {"points":4, "question_id":"3a", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "3b-0-basic" : {"points":1, "question_id":"3b", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "3b-1-hidden" : {"points":3, "question_id":"3b", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "3c-0-basic" : {"points":1, "question_id":"3c", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "3c-1-hidden" : {"points":3, "question_id":"3c", "is_written":false, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "3d" : {"points":2, "question_id":"3d", "is_written":true, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "3e" : {"points":2, "question_id":"3e", "is_written":true, "is_coding":true, "is_online":false, "is_extra_credit":false},
+
+  "4a" : {"points":2, "question_id":"4a", "is_written":true, "is_coding":false, "is_online":false, "is_extra_credit":false},
+
+  "4b" : {"points":2, "question_id":"4b", "is_written":true, "is_coding":false, "is_online":false, "is_extra_credit":false},
+
+  "4c" : {"points":2, "question_id":"4c", "is_written":true, "is_coding":false, "is_online":false, "is_extra_credit":false}
+
+}

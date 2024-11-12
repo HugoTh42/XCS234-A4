@@ -1,0 +1,14 @@
+\item \points{1f}
+
+Pick one of the trained policies and render a video of an evaluation rollout.
+
+\begin{lstlisting}
+$ python render.py --checkpoint results/[MODEL]/model.zip
+\end{lstlisting}
+
+Does the agent successfully complete the assigned task? Does it complete it in the way you would expect it to, or are you surprised by the agent behavior?
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_1f(.*?)% <SCPD_SUBMISSION_TAG>_1f', f.read(), re.DOTALL)).group(1))
+🐍

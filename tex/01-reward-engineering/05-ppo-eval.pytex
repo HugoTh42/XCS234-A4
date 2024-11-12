@@ -1,0 +1,21 @@
+\item \points{1e}
+
+The plot of the episodic returns along training, with and without early termination is seen below. You can generate the plot by running
+
+\begin{lstlisting}
+$ python plot.py --directory results --output ppo_hopper.png --seeds SEEDS
+\end{lstlisting}
+
+where \texttt{SEEDS} is a comma-separated list of the seeds you used. Comment on the performance in terms of training epochs and wall time. Is the standard error in the average returns high or low? How could you obtain a better estimate of the average return on Hopper achieved by a policy optimized with PPO?
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.3\linewidth]{images/ppo_hopper}
+    \caption{PPO results}
+    \label{fig:ppo}
+\end{figure}
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_1e(.*?)% <SCPD_SUBMISSION_TAG>_1e', f.read(), re.DOTALL)).group(1))
+🐍

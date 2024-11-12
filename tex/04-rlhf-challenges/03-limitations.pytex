@@ -1,0 +1,8 @@
+\item \points{4c}
+
+There are a number of limitations of RLHF. Please describe one here (different than parts a and b). You may find it interesting to read \href{https://arxiv.org/pdf/2307.15217}{``Open Problems and Fundamental Limitations of Reinforcement Learning from Human Feedback''} and you are welcome to describe challenges listed there, or make up your own.
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_4c(.*?)% <SCPD_SUBMISSION_TAG>_4c', f.read(), re.DOTALL)).group(1))
+🐍

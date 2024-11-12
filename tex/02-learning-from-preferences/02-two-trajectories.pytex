@@ -1,0 +1,16 @@
+\item \points{2b}
+
+In this problem we are trying to solve the same task as in the previous part, but this time we will learn a reward function from a dataset of preferences rather than manually specifying a reward function. 
+
+Load one of the samples from the preference dataset we provide you, and render a video of the two trajectories using the following command
+
+\begin{lstlisting}
+$ python render.py --dataset ./data/prefs-hopper.npz --idx IDX
+\end{lstlisting}
+
+where \texttt{IDX} is an index into the preference dataset (if ommitted a sequence will be chosen at random). Bear in mind that each sequence in the dataset has 25 timesteps, which means that the resulting videos will have 0.2 seconds. Take note of which sequence was labeled as preferred (this information will appear in the name of the generated videos, but for the coming parts it is helpful to know that $0$ means the first sequence was preferred, $1$ means the second one, and $0.5$ means neither is preferred over the other). Do you agree with the label (that is, if shown the two trajectories, would you have ranked them the same way they appear in the dataset, knowing that we are trying to solve the Hopper environment)?
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_2b(.*?)% <SCPD_SUBMISSION_TAG>_2b', f.read(), re.DOTALL)).group(1))
+🐍

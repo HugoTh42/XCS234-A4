@@ -1,0 +1,21 @@
+\item \points{2e}
+
+Train a model using PPO and the learned reward function with 3 different random seeds. The expected plots of the average returns for both the original reward function and the learned reward function are given below.
+
+\begin{lstlisting}
+$ python plot.py --rlhf-directory results_rlhf --output results_rlhf/hopper_rlhf.png --seeds 0
+\end{lstlisting}
+
+Do the two correlate?
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.3\linewidth]{images/rlhf_results}
+    \caption{RLHF results}
+    \label{fig:rlhf}
+\end{figure}
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_2e(.*?)% <SCPD_SUBMISSION_TAG>_2e', f.read(), re.DOTALL)).group(1))
+🐍
