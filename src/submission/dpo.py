@@ -55,6 +55,14 @@ class ActionSequenceModel(nn.Module):
         #######################################################
         ######### 3-9 lines. ############
         ### START CODE HERE ###
+        self.net = nn.Sequential(
+            nn.Linear(obs_dim + action_dim, hidden_dim), 
+            nn.ReLU(),
+            nn.Linear(hidden_dim, 2 * self.segment_len * self.action_dim),
+            nn.ReLU()
+        )
+
+        self.optimizer = torch.optim.AdamW(self.parameters(), lr=lr)
         ### END CODE HERE ###
         #######################################################
 
@@ -96,6 +104,10 @@ class ActionSequenceModel(nn.Module):
         #######################################################
         ######### 3-9 lines. ############
         ### START CODE HERE ###
+        mean, log_std = torch.split(net_out, 2)
+        mean = torch.tanh(mean)
+        log_std = torch.clamp(log_std, min=LOGSTD_MIN, max=LOGSTD_MAX)
+        std = torch.exp(log_std)
         ### END CODE HERE ###
         #######################################################
         return mean, std

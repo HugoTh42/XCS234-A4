@@ -41,6 +41,13 @@ class RewardModel(nn.Module):
         #######################################################
         #########   2-10 lines.   ############
         ### START CODE HERE ###
+        self.net = nn.Sequential(
+            nn.Linear(obs_dim + action_dim, hidden_dim), 
+            nn.LeakyReLU(),
+            nn.Linear(hidden_dim, 1),
+            nn.Sigmoid()
+            )
+        self.optimizer = torch.optim.AdamW(self.parameters(), lr=1e-3)
         ### END CODE HERE ###
         #######################################################
         self.r_min = r_min
@@ -80,6 +87,9 @@ class RewardModel(nn.Module):
         #######################################################
         #########   2-3 lines.   ############
         ### START CODE HERE ###
+        net_input = torch.cat((obs, action), dim=1)
+        reward = self.net(net_input)
+        return reward
         ### END CODE HERE ###
         #######################################################
 
@@ -112,6 +122,11 @@ class RewardModel(nn.Module):
         #######################################################
         #########   1-4 lines.   ############
         ### START CODE HERE ###
+        obs_tensor = torch.Tensor(obs).unsqueeze(0) 
+        action_tensor = torch.Tensor(action).unsqueeze(0)
+        reward = self.forward(obs_tensor, action_tensor)
+        reward = reward.item()
+        return reward * (self.r_max - self.r_min) + self.r_min
         ### END CODE HERE ###
         #######################################################
 
@@ -137,6 +152,15 @@ class RewardModel(nn.Module):
         #######################################################
         #########   5-10 lines.   ############
         ### START CODE HERE ###
+        B, T = obs1.shape[:2]
+
+        rewards1 = self.forward(obs1, act1).reshape((B,T)).sum(dim=1)
+        rewards2 = self.forward(obs2, act2).reshape((B,T)).sum(dim=1)
+
+        scores = torch.stack((rewards1, rewards2), dim=1)
+        prob = torch.stack((1-label, label), dim=1)
+
+        loss = nn.functional.cross_entropy(scores, prob)  
         ### END CODE HERE ###
         #######################################################
 

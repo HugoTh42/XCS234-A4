@@ -20,7 +20,6 @@ import torch.nn as nn
 import torch.distributions as D
 
 import submission
-import solution
 
 # Dimensions for Hopper hardcoded so we don't have to install MuJoCo on the autograder
 OBSERVATION_DIM = 11
@@ -235,7 +234,7 @@ class Test_3a(GradedTestCase):
     ### END_HIDE ###
 
 class Test_3b(GradedTestCase):
-    
+
     def setUp(self):
         # Hopper spaces
         self.observation_space = gym.spaces.Box(
@@ -244,7 +243,7 @@ class Test_3b(GradedTestCase):
         self.action_space = gym.spaces.Box(
             shape=[ACTION_DIM], low=-1.0, high=1.0
         )
-    
+
     # Returns a batch of random observations and actions
     def random_inputs(self, torchify=True, sequence=False):
         observations, actions = [], []
@@ -276,7 +275,9 @@ class Test_3b(GradedTestCase):
 
         if 'SFT' in models:
             self.sft_model = submission.SFT(**kwargs)
-            self.ref_sft_model = solution.SFT(**kwargs)
+            self.ref_sft_model = self.run_with_solution_if_possible(
+                submission, lambda sub_or_sol: sub_or_sol
+            ).SFT(**kwargs)
             self.sft_model.load_state_dict(self.ref_sft_model.state_dict())
 
     @graded(timeout=5)
@@ -291,7 +292,7 @@ class Test_3b(GradedTestCase):
         current_params = list(self.sft_model.parameters())[0].clone()
 
         self.assertFalse(torch.equal(previous_params.data, current_params.data))
-    
+
     ### START_HIDE ###
 
     @graded(is_hidden=True, timeout=5)
@@ -307,7 +308,7 @@ class Test_3b(GradedTestCase):
     ### END_HIDE ###
 
 class Test_3c(GradedTestCase):
-    
+
     def setUp(self):
         # Hopper spaces
         self.observation_space = gym.spaces.Box(
@@ -316,7 +317,7 @@ class Test_3c(GradedTestCase):
         self.action_space = gym.spaces.Box(
             shape=[ACTION_DIM], low=-1.0, high=1.0
         )
-    
+
     # Returns a batch of random observations and actions
     def random_inputs(self, torchify=True, sequence=False):
         observations, actions = [], []
@@ -347,13 +348,17 @@ class Test_3c(GradedTestCase):
         }
         if 'SFT' in models:
             self.sft_model = submission.SFT(**kwargs)
-            self.ref_sft_model = solution.SFT(**kwargs)
+            self.ref_sft_model = self.run_with_solution_if_possible(
+                submission, lambda sub_or_sol: sub_or_sol
+            ).SFT(**kwargs)
             self.sft_model.load_state_dict(self.ref_sft_model.state_dict())
         if 'DPO' in models:
             kwargs['beta'] = 0.1
             kwargs['lr'] = 1e-6
             self.dpo_model = submission.DPO(**kwargs)
-            self.ref_dpo_model = solution.DPO(**kwargs)
+            self.ref_dpo_model = self.run_with_solution_if_possible(
+                submission, lambda sub_or_sol: sub_or_sol
+            ).DPO(**kwargs)
             self.dpo_model.load_state_dict(self.ref_dpo_model.state_dict())
 
     @graded(timeout=5)
@@ -367,12 +372,11 @@ class Test_3c(GradedTestCase):
         previous_params = list(self.dpo_model.parameters())[0].clone()
         loss = self.dpo_model.update(obs, actions1, actions2, self.sft_model)
         current_params = list(self.dpo_model.parameters())[0].clone()
-        
+
         self.assertFalse(torch.equal(previous_params.data, current_params.data))
 
     ### BEGIN_HIDE ###
     ### END_HIDE ###
-
 
 
 def getTestCaseForTestID(test_id):
