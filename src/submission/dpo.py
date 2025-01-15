@@ -56,7 +56,7 @@ class ActionSequenceModel(nn.Module):
         ######### 3-9 lines. ############
         ### START CODE HERE ###
         self.net = nn.Sequential(
-            nn.Linear(obs_dim + action_dim, hidden_dim), 
+            nn.Linear(obs_dim, hidden_dim), 
             nn.ReLU(),
             nn.Linear(hidden_dim, 2 * self.segment_len * self.action_dim),
             nn.ReLU()
@@ -104,9 +104,9 @@ class ActionSequenceModel(nn.Module):
         #######################################################
         ######### 3-9 lines. ############
         ### START CODE HERE ###
-        mean, log_std = torch.split(net_out, 2)
-        mean = torch.tanh(mean)
-        log_std = torch.clamp(log_std, min=LOGSTD_MIN, max=LOGSTD_MAX)
+        mean, log_std = torch.split(net_out, self.segment_len * self.action_dim, dim=1)
+        mean = torch.tanh(mean.view(batch_size, self.segment_len, self.action_dim))
+        log_std = torch.clamp(log_std.view(batch_size, self.segment_len, self.action_dim), min=LOGSTD_MIN, max=LOGSTD_MAX)
         std = torch.exp(log_std)
         ### END CODE HERE ###
         #######################################################
@@ -137,6 +137,11 @@ class ActionSequenceModel(nn.Module):
         #######################################################
         #########   1-5 lines.    ############
         ### START CODE HERE ###
+        mean, std = self.forward(obs)
+        temp = D.Independent(D.Normal(mean, std), 2)
+        print(temp.batch_shape)
+        print(temp.event_shape)
+        return D.Independent(D.Normal(mean, std), 2)
         ### END CODE HERE ###
         #######################################################
 
@@ -161,6 +166,10 @@ class ActionSequenceModel(nn.Module):
         #######################################################
         #########   2-6 lines.    ############
         ### START CODE HERE ###
+        with torch.no_grad():
+            dist = self.distribution(np.expand_dims(obs, axis=0))
+            action = dist.sample()[0,0].clamp(-1,1).cpu().numpy()
+        return action
         ### END CODE HERE ###
         #######################################################
 
