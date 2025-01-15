@@ -58,8 +58,7 @@ class ActionSequenceModel(nn.Module):
         self.net = nn.Sequential(
             nn.Linear(obs_dim, hidden_dim), 
             nn.ReLU(),
-            nn.Linear(hidden_dim, 2 * self.segment_len * self.action_dim),
-            nn.ReLU()
+            nn.Linear(hidden_dim, 2 * self.segment_len * self.action_dim)
         )
 
         self.optimizer = torch.optim.AdamW(self.parameters(), lr=lr)
@@ -138,9 +137,6 @@ class ActionSequenceModel(nn.Module):
         #########   1-5 lines.    ############
         ### START CODE HERE ###
         mean, std = self.forward(obs)
-        temp = D.Independent(D.Normal(mean, std), 2)
-        print(temp.batch_shape)
-        print(temp.event_shape)
         return D.Independent(D.Normal(mean, std), 2)
         ### END CODE HERE ###
         #######################################################
