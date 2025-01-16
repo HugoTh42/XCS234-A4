@@ -191,6 +191,17 @@ class SFT(ActionSequenceModel):
         #######################################################
         #########   4-6 lines.    ############
         ### START CODE HERE ###
+        dist = self.distribution(obs)
+
+        log_probs = dist.log_prob(actions)
+
+        loss = -log_probs.mean()
+
+        self.optimizer.zero_grad()
+
+        loss.backward()
+
+        self.optimizer.step()
         ### END CODE HERE ###
         #######################################################
         return loss.item()
@@ -240,6 +251,26 @@ class DPO(ActionSequenceModel):
         #######################################################
         #########   8-14 lines.   ############
         ### START CODE HERE ###
+        ref_dist = ref_policy.distribution(obs)
+        log_p_ref_w = ref_dist.log_prob(actions_w)
+        log_p_ref_l = ref_dist.log_prob(actions_l)
+
+        dist = self.distribution(obs)
+
+        log_p_w = dist.log_prob(actions_w)
+        log_p_l = dist.log_prob(actions_l)
+
+        diff = (log_p_w - log_p_l) - self.beta * (log_p_ref_w - log_p_ref_l)
+
+        diff_sigmoid = torch.sigmoid(diff)
+
+        loss = -torch.log(diff_sigmoid).mean()
+
+        self.optimizer.zero_grad()
+
+        loss.backward()
+
+        self.optimizer.step()
         ### END CODE HERE ###
         #######################################################
         return loss.item()
