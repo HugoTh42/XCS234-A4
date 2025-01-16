@@ -260,7 +260,7 @@ class DPO(ActionSequenceModel):
         log_p_w = dist.log_prob(actions_w)
         log_p_l = dist.log_prob(actions_l)
 
-        diff = (log_p_w - log_p_l) - self.beta * (log_p_ref_w - log_p_ref_l)
+        diff = self.beta * ((log_p_w - log_p_l) - (log_p_ref_w - log_p_ref_l))
 
         diff_sigmoid = torch.sigmoid(diff)
 
